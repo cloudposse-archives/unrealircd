@@ -1,0 +1,17 @@
+#!/bin/bash
+cd /etc/unrealircd
+
+if [ ! -f server.cert.pem ]; then
+  openssl req -new -out server.req.pem -keyout server.key.pem -nodes -config openssl.cnf -batch
+  openssl req -x509 -days 3650 -in server.req.pem -key server.key.pem -out server.cert.pem 
+  openssl x509 -subject -dates -fingerprint -noout -in server.cert.pem 
+  chmod o-rwx server.req.pem server.key.pem server.cert.pem 
+  chmod g-rwx server.req.pem server.key.pem server.cert.pem
+fi
+
+(/usr/bin/unrealircd -F -f $UNREALIRCD_CONF)&
+PID=$!
+trap "kill -SIGTERM $PID" SIGINT SIGTERM 
+wait
+echo "Exiting..."
+exit 0
