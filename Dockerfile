@@ -3,6 +3,8 @@ FROM ubuntu:14.04
 # https://www.digitalocean.com/community/tutorials/how-to-run-an-unrealircd-chat-server-on-debian-7
 # https://www.unrealircd.org/faq#29
 
+MAINTAINER  Erik Osterman "e@osterman.com"
+
 ENV UNREALIRCD_VERSION 3.2.10.5
 ENV UNREALIRCD_CONF /etc/unrealircd/default.conf
 
